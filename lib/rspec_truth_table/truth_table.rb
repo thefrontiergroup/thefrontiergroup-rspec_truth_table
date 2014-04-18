@@ -51,7 +51,7 @@ module RspecTruthTable
           context(message) do
             instance_exec(*args, &_setup_block)
             it "returns #{row.last}" do
-              should be row.last
+              should eq row.last
             end
           end
         end
