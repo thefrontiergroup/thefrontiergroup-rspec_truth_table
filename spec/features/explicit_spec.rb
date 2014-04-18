@@ -16,7 +16,7 @@ describe 'A explicit table' do
       let(:x) { x }
       let(:y) { y }
     end
-    RUBY
+  RUBY
 
   context "when the table matches the expression" do
     let(:table) { <<-RUBY }
