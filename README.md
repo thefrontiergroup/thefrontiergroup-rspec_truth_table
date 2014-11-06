@@ -18,6 +18,11 @@ Or install it yourself as:
 
 ## Usage
 
+Include the truth_table helpers in RSpec Config
+
+    RSpec.configure do |config|
+      config.include RSpec::ExampleTest
+    end
 
 Define a subject
 
@@ -54,7 +59,7 @@ object or other initialization step.
     end
 
 Outside of the setup block, define a truth table with inputs and outputs. This table will have one column more than the
-number of inputs, specifying the expected result.
+number of inputs, specifying the expected result of the subject.
 
     describe "boolean_method" do
       subject { boolean_method(x, y, z) }
@@ -65,7 +70,6 @@ number of inputs, specifying the expected result.
            let(:y) { y }
            let(:z) { z }
         end
-      end
 
       # X | Y | Z | R
       # -------------
@@ -77,11 +81,13 @@ number of inputs, specifying the expected result.
         f | t | f | f
         f | f | t | f
         f | f | f | f
+      end
+
     end
 
 In many cases, there are still to many combinations to describe, as such you can use `x` as a wild card input. Which
 will define tests for `true` and `false`. This can aid in defining intent greatly. The following example performs the
-same test as above
+same test as above.
 
     describe "boolean_method" do
       subject { boolean_method(x, y, z) }
@@ -92,16 +98,17 @@ same test as above
            let(:y) { y }
            let(:z) { z }
         end
+
+        # X | Y | Z | R
+        # -------------
+          x | x | f | f # always false if Z is false
+          t | t | x | f # X ^ Y
+          f | f | x | f # X ^ Y
+
+          x | x | x | t # The rest should result in true
       end
-
-      # X | Y | Z | R
-      # -------------
-        x | x | f | f # always false if z is false
-        t | t | x | f # X ^ Y
-        f | f | x | f # X ^ Y
-
-        x | x | x | t # The rest are true
     end
+
 
 ## Contributing
 
