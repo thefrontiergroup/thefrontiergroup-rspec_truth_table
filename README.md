@@ -21,7 +21,7 @@ Or install it yourself as:
 Include the truth_table helpers in RSpec Config
 
     RSpec.configure do |config|
-      config.include RSpec::ExampleTest
+      config.extend RspecTruthTable::Helpers
     end
 
 Define a subject
@@ -41,10 +41,7 @@ use the `truth_table` helper in your describe / context block.
       end
     end
 
-Use the `setup` method define a block to be used to setup the state of the test. This must be in the  `truth_table` block.
-Any arguments you specify the in the block to `setup` will be available to any `let` or `before` methods used inside it.
-These will be either `true` or `false` when the test is run, as such you can branch on them, to optionally factory an
-object or other initialization step.
+Inside the `truth_table` block, use the `setup` method to define a block that sets up the state of the test. Any arguments you specify to `setup` will be available to any `let` or `before` methods used inside it, these will be either `true` or `false` when the test is run. You can then use them to optionally factory an object or do other initialization steps.
 
     describe "boolean_method" do
       subject { boolean_method(x, y, z) }
@@ -58,8 +55,7 @@ object or other initialization step.
       end
     end
 
-Outside of the setup block, define a truth table with inputs and outputs. This table will have one column more than the
-number of inputs, specifying the expected result of the subject.
+Outside of the setup block, define a truth table with inputs and outputs. This table will have one column more than the number of inputs, as the final column specifies the expected result of the subject.
 
     describe "boolean_method" do
       subject { boolean_method(x, y, z) }
@@ -85,9 +81,7 @@ number of inputs, specifying the expected result of the subject.
 
     end
 
-In many cases, there are still to many combinations to describe, as such you can use `x` as a wild card input. Which
-will define tests for `true` and `false`. This can aid in defining intent greatly. The following example performs the
-same test as above.
+You can also use `x` as a wild card input, this will define tests for `true` and `false` and can aid in defining intent greatly. The following example performs the same test as above.
 
     describe "boolean_method" do
       subject { boolean_method(x, y, z) }
@@ -112,7 +106,7 @@ same test as above.
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/rspec_truth_table/fork )
+1. Fork it ( http://github.com/thefrontiergroup/rspec_truth_table/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
